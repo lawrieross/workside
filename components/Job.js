@@ -1,16 +1,20 @@
 import * as React from 'react'
 
-import Link from 'next/link'
+import { Checkmark } from './Checkmark'
 
 export default function Job({ job }) {
   const jobData = job || {}
-  const { position, location, experience, salary, overview } = jobData
+  const {
+    position,
+    location,
+    experience,
+    salary,
+    overview,
+    requirements
+} = jobData
 
   return (
     <>
-      <div className="back">
-        <BackButton />
-      </div>
       <section className="job">
         <div className="job-header">
           <div className="position">
@@ -42,15 +46,18 @@ export default function Job({ job }) {
           <p>
             {overview}
           </p>
+
+          <h4>Job requirements</h4>
+          <div className="requirements">
+            {requirements.map((requirement, index) => (
+              <div key={index} className="requirement">
+                <Checkmark verified={true} />
+                <span>{requirement}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </>
   )
 }
-
-// eslint-disable-next-line react/display-name
-const BackButton = React.forwardRef(({}, ref) => (
-  <Link ref={ref} href="/" passHref>
-    <a>Back</a>
-  </Link>
-))

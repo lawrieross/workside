@@ -1,22 +1,28 @@
-import Link from 'next/link'
-import Image from 'next/image'
 import * as React from 'react'
+import Image from 'next/image'
 
 import { Location } from './Location'
 import { Checkmark } from './Checkmark'
 
 // eslint-disable-next-line react/display-name
-const JobListing = React.forwardRef(({ data }, ref) => {
-  const { id, image, alt, title, location, tags, verified } = data
+const JobListing = ({ showJobInfo, setCurrentJob, toggleJobInfo, data }) => {
+  const {
+    image,
+    alt,
+    title,
+    location,
+    tags,
+    verified
+  } = data
+
+  const handleClick = event => {
+    event.preventDefault();
+    setCurrentJob(data);
+    toggleJobInfo(!showJobInfo);
+  }
 
   return (
-    <Link
-      ref={ref}
-      href={{ pathname: '/jobs/[id]', query: { id: id } }}
-      scroll={false}
-      shallow={true}
-      passHref
-    >
+    <button className="job-listing-button" onClick={handleClick}>
       <a className="job-listing">
         <div className="job-header">
           <div className="logo">
@@ -57,8 +63,8 @@ const JobListing = React.forwardRef(({ data }, ref) => {
           </div>
         </div>
       </a>
-    </Link>
+    </button>
   )
-})
+}
 
 export default JobListing
